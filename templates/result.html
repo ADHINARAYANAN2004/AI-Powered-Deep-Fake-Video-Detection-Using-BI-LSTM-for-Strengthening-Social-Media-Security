@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deepfake Result</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='icon/title.png') }}">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: radial-gradient(circle at center, #0a192f, #020c1b);
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .result-box {
+      border: 2px solid {{ color }};
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 25px {{ color }};
+      max-width: 500px;
+      background: rgba(10, 25, 47, 0.9);
+      animation: glow 1.5s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { box-shadow: 0 0 15px {{ color }}; }
+      to { box-shadow: 0 0 35px {{ color }}; }
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: {{ color }};
+      text-shadow: 0 0 15px {{ color }};
+      margin-bottom: 15px;
+    }
+
+    p {
+      margin-top: 10px;
+      font-size: 1.1rem;
+      line-height: 1.5;
+    }
+
+    a {
+      margin-top: 25px;
+      display: inline-block;
+      padding: 12px 25px;
+      border: 1px solid #00f0ff;
+      border-radius: 8px;
+      color: #00f0ff;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      background: #00f0ff;
+      color: #0a192f;
+      box-shadow: 0 0 15px #00f0ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="result-box">
+    <h1>Prediction: {{ result }}</h1>
+
+    {% if result == "REAL" %}
+      <p>This video appears to be authentic and does not show signs of manipulation.  
+      Confidence in this assessment: <strong>{{ confidence }}</strong>.</p>
+    {% else %}
+      <p>This video may be altered or artificially generated. It is likely a deepfake.  
+      Confidence in this assessment: <strong>{{ confidence }}</strong>.</p>
+    {% endif %}
+
+    <a href="{{ url_for('upload_page') }}">Back to Upload</a>
+  </div>
+</body>
+</html>
